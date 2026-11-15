@@ -1,97 +1,114 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Scalpit — Premium Investment Mobile Application
 
-# Getting Started
+Scalpit is a high-performance React Native CLI mobile application inspired by modern investment platforms like Groww. It provides a complete, scalable foundation for direct stock trading, mutual funds, SIPs, IPO tracking, and comprehensive portfolio analytics.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+---
 
-## Step 1: Start Metro
+## 🌟 Key Features
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+1. **Centralized Multi-Theme Design System**
+   - **Groww Green Theme** (`#00B386`), **Fintech Blue Theme** (`#1E40AF`), and **OLED Dark Theme** (`#111827`).
+   - Dynamic `useTheme()` hook with zero hardcoded colors across screens.
+   - Central theme registry in `src/theme/`.
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+2. **Official Scalpit Branding Integration**
+   - Brand asset configuration in `src/config/assets.ts`.
+   - Official company logo stored at `src/assets/images/company-logo.png`.
 
-```sh
-# Using npm
+3. **Complete Authentication Flow**
+   - **Splash Screen**: Session validation & auto-routing.
+   - **Onboarding Carousel**: Feature showcase with custom pagination.
+   - **Mobile Login**: Country code selection (+91) with 10-digit validation.
+   - **Signup Screen**: Full name, mobile, email, and terms & conditions acceptance.
+   - **OTP Verification**: 6 individual digit input boxes, 30s resend countdown timer, and duplicate request throttling.
+   - **Investor Profile Setup**: SEBI-compliant PAN verification and identity setup.
+
+4. **Security & Session Persistence**
+   - Hardware-backed token storage via `react-native-keychain`.
+   - Automatic session restoration on app relaunch.
+   - Non-sensitive session markers via `@react-native-async-storage/async-storage`.
+
+5. **Groww-Inspired Home Dashboard**
+   - **Header**: Official logo, live search, notifications with unread badge, profile avatar.
+   - **Market Indices**: NIFTY 50, SENSEX, BANK NIFTY with real-time status and trend badges.
+   - **Portfolio Summary**: Total invested, current valuation, total P&L (+/-%), and 1-day returns.
+   - **Quick Actions**: Stocks, Mutual Funds, IPO, Watchlist.
+   - **Most Active Stocks**: Live stock cards with ticker, company name, price, and daily change.
+   - **My Watchlist**: Pinned equities with count badge.
+   - **Mutual Funds**: Top direct growth funds with 3Y annualized CAGR and minimum SIP values.
+   - **Bottom Navigation**: Home, Stocks, Mutual Funds, Orders, and Profile tabs.
+
+6. **Enterprise API Architecture & Development Mock Mode**
+   - Configurable endpoints in `src/services/api/apiEndpoints.ts`.
+   - Axios instance with automatic JWT Bearer injection and 401 refresh token retry queue.
+   - Built-in **Development Mock Authentication Adapter** allowing full UI and navigation testing prior to backend deployment.
+   - Clear banner indicators when running in mock mode.
+
+---
+
+## 📁 Architecture & Folder Structure
+
+```
+mobile-app/
+├── android/                     # Native Android project (Kotlin, React Native 0.88)
+├── ios/                         # Native iOS project (CocoaPods, React Native 0.88)
+├── src/
+│   ├── assets/
+│   │   ├── images/              # Official company-logo.png
+│   │   ├── fonts/               # Custom font definitions
+│   │   └── icons/
+│   ├── components/
+│   │   ├── common/              # AppButton, AppText, AppInput, AppHeader, AppLoader, AppModal, etc.
+│   │   ├── cards/               # MarketIndexCard, StockCard, MutualFundCard, PortfolioCard
+│   │   └── layout/              # ScreenContainer, KeyboardWrapper
+│   ├── config/                  # app.config.ts, environment.ts, assets.ts, appConstants.ts
+│   ├── theme/                   # Centralized themes (green, blue, dark), typography, spacing, radius, shadows
+│   ├── features/
+│   │   ├── auth/                # Splash, Onboarding, Login, Signup, OTP, ProfileSetup, authSlice
+│   │   ├── home/                # HomeScreen and 9 modular dashboard sections
+│   │   ├── stocks/              # Stocks listing screen
+│   │   ├── mutualfunds/         # Mutual funds screen
+│   │   ├── orders/              # Orders & positions screen
+│   │   └── profile/             # Profile & centralized theme switcher screen
+│   ├── navigation/              # RootNavigator, AuthNavigator, MainTabNavigator, HomeNavigator
+│   ├── services/api/            # axiosInstance, apiEndpoints, apiTypes, apiErrorHandler, tokenManager
+│   ├── store/                   # Redux Toolkit store and rootReducer
+│   ├── hooks/                   # useTheme, useAppDispatch, useAppSelector
+│   ├── utils/                   # validators, formatters, logger
+│   └── types/                   # common types
+├── .env.example
+├── README.md
+├── MOBILE_SETUP.md
+└── API_INTEGRATION.md
+```
+
+---
+
+## 🚀 Quick Start
+
+```bash
+# 1. Install dependencies
+npm install
+
+# 2. Run TypeScript checks
+npx tsc --noEmit
+
+# 3. Run ESLint
+npm run lint
+
+# 4. Run Jest test suite
+npm test -- --no-watchman
+
+# 5. Start Metro
 npm start
 
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
+# 6. Run on Android
 npm run android
 
-# OR using Yarn
-yarn android
-```
-
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+# 7. Run on iOS (macOS)
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+For complete setup instructions and troubleshooting, refer to [`MOBILE_SETUP.md`](./MOBILE_SETUP.md).
+For backend integration and API contracts, refer to [`API_INTEGRATION.md`](./API_INTEGRATION.md).
+# Scalpit
